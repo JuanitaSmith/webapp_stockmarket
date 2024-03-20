@@ -1,0 +1,10 @@
+*.idea*
+.idea/datascience_nanodegree.iml
+.idea/misc.xml
+.pyc
+__pycache__
+.ipynb_checkpoints
+ .idea/*
+ notebooks/old.ipynb
+ notebooks/sarima_model.pkl
+ notebooks/wrange_data_old.ipynb
