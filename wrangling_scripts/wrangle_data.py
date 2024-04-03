@@ -1,9 +1,7 @@
-import pandas as pd
 import plotly.graph_objs as go
 import os
 import pandas as pd
 import requests
-from statsmodels.tsa.arima.model import ARIMA
 import joblib
 
 # trained model paths
@@ -39,7 +37,7 @@ def gather_data(symbol):
 
     # import API credentials from environment variables
     if symbol is None:
-        stocks = SYMBOL
+        symbol = SYMBOL
 
     # get API access key
     access_key = os.environ.get('MARKET_STACK_API')
@@ -66,10 +64,10 @@ def gather_data(symbol):
         else:
             frames = [df, df_all]
             df_all = pd.concat(frames)
-            print('#records for {} is {}; total records is {}'.format(stock, df.shape[0], df_all.shape[0]))
+            print('#records for {} is {}; total records is {}'.format(symbol, df.shape[0], df_all.shape[0]))
     else:
         # construct error message and append to error list
-        error_message = "{} Request returned an error: {} {}".format(stock, api_response['error']['code'],
+        error_message = "{} Request returned an error: {} {}".format(symbol, api_response['error']['code'],
                                                                      api_response['error']['message'])
         print(error_message)
         error_list.append(error_message)
@@ -161,14 +159,12 @@ def predict_stock(df_train, df_test, period):
 
     return forecast
 
-def return_figures():
-    """Creates four plotly visualizations
 
-    Args:
-        None
+def return_figures():
+    """Creates four plotly visualizations using stock market data
 
     Returns:
-        list (dict): list containing the four plotly visualizations
+        list (dict): list containing the plotly visualizations
 
     """
 
