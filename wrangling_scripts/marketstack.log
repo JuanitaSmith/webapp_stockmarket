@@ -1,0 +1,18 @@
+INFO:__main__:Main initiated
+INFO:__main__:Cleaning Initiated
+INFO:__main__:Gathering data skipped
+INFO:__main__:Cleaning data in-progress
+INFO:__main__:           symbol      close    volume
+date                                  
+2024-03-22     GT  12.754286  3.425063
+2024-03-25     GT  12.850000  3.195394
+2024-03-26     GT  12.947143  3.200230
+2024-03-27     GT  13.107143  2.749150
+2024-03-28     GT  13.278571  2.729311
+INFO:__main__:           symbol      close    volume
+date                                  
+2023-11-01     GT  13.084286  5.358229
+2023-12-01     GT  14.293571  3.946029
+2024-01-01     GT  13.841429  4.605829
+2024-02-01     GT  12.976429  9.046845
+2024-03-01     GT  12.435000  3.733996

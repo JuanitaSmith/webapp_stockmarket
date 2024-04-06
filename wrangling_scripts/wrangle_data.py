@@ -12,17 +12,17 @@ STOCK_MODEL_PATH = "models/arima_model.pkl"
 VOLUME_MODEL_PATH = "models/volume_model.pkl"
 
 # general data directory
-DATA_FOLDER = '../data'
+DATA_FOLDER = 'data'
 
 # default file names
-FILE_MARKETSTACK_RAW = '../data/marketstack_raw.csv'
-FILE_MARKETSTACK_CLEAN = '../data/marketstack_clean.csv'
+FILE_MARKETSTACK_RAW = 'data/marketstack_raw.csv'
+FILE_MARKETSTACK_CLEAN = 'data/marketstack_clean.csv'
 FILE_LOG = 'marketstack.log'
 
 # Stock to analyze
 SYMBOL = ['GT']
 
-logging.basicConfig(filename=FILE_LOG, filemode='w', level=logging.DEBUG)
+logging.basicConfig(filename=FILE_LOG, filemode='w', level=logging.INFO)
 
 
 def create_folder(folder_name):
@@ -82,7 +82,7 @@ def gather_data(symbol):
                                                                      api_response['error']['message'])
         print(error_message)
         error_list.append(error_message)
-        logger.error(error_message)
+        logger.info(error_message)
 
     df_all.to_csv(FILE_MARKETSTACK_RAW, index=False)
     logger.info('API data saved')
@@ -126,6 +126,8 @@ def clean_data(from_path, to_path):
     marketstack_clean['close'] = marketstack_clean['close'].rolling(7, center=False).mean()
     marketstack_clean['volume'] = marketstack_clean['volume'].rolling(7, center=False).mean()
 
+    logger.info(marketstack_clean.tail())
+
     # resample data to monthly
     freq = 'MS'
     marketstack_clean = (marketstack_clean.resample(freq).agg(
@@ -137,6 +139,8 @@ def clean_data(from_path, to_path):
     marketstack_clean = marketstack_clean.dropna()
 
     marketstack_clean.to_csv(to_path, index=True)
+
+    logger.info(marketstack_clean.tail())
 
     return marketstack_clean
 
@@ -414,7 +418,7 @@ def return_figures():
 
 if __name__ == "__main__":
 
-    logger.info('Return figures initiated')
+    logger.info('Main initiated')
     clean_data(
         from_path=FILE_MARKETSTACK_RAW,
         to_path=FILE_MARKETSTACK_CLEAN

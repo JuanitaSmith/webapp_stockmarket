@@ -1,0 +1,37 @@
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 127-594-215
+INFO:wrangling_scripts.wrangle_data:Return figures initiated
+INFO:wrangling_scripts.wrangle_data:Cleaning Initiated
+INFO:wrangling_scripts.wrangle_data:Gathering data initiated
+INFO:wrangling_scripts.wrangle_data:Gathering data initiated
+INFO:wrangling_scripts.wrangle_data:Folder data created
+INFO:wrangling_scripts.wrangle_data:API data saved
+INFO:wrangling_scripts.wrangle_data:Cleaning data in-progress
+INFO:wrangling_scripts.wrangle_data:           symbol      close    volume
+date                                  
+2024-03-22     GT  12.754286  3.425063
+2024-03-25     GT  12.850000  3.195394
+2024-03-26     GT  12.947143  3.200230
+2024-03-27     GT  13.107143  2.749150
+2024-03-28     GT  13.278571  2.729311
+INFO:wrangling_scripts.wrangle_data:           symbol      close    volume
+date                                  
+2023-11-01     GT  13.084286  5.358229
+2023-12-01     GT  14.293571  3.946029
+2024-01-01     GT  13.841429  4.605829
+2024-02-01     GT  12.976429  9.046845
+2024-03-01     GT  12.435000  3.733996
+INFO:wrangling_scripts.wrangle_data:           symbol      close    volume
+date                                  
+2023-11-01     GT  13.084286  5.358229
+2023-12-01     GT  14.293571  3.946029
+2024-01-01     GT  13.841429  4.605829
+2024-02-01     GT  12.976429  9.046845
+2024-03-01     GT  12.435000  3.733996
+INFO:wrangling_scripts.wrangle_data:Predicting stock initiated
+INFO:wrangling_scripts.wrangle_data:Predicting volume initiated
+INFO:wrangling_scripts.wrangle_data:predict period start 111
+INFO:wrangling_scripts.wrangle_data:predict period end 135
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2024 16:10:11] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2024 16:10:11] "[36mGET /static/img/githublogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [06/Apr/2024 16:10:11] "[36mGET /static/img/linkedinlogo.png HTTP/1.1[0m" 304 -
