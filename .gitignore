@@ -9,3 +9,4 @@ __pycache__
  notebooks/sarima_model.pkl
  notebooks/wrange_data_old.ipynb
  *marketstack.log
+ marketstack.log
