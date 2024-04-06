@@ -3,6 +3,9 @@ import os
 import pandas as pd
 import requests
 import joblib
+import logging
+logger = logging.getLogger(__name__)
+
 
 # trained model paths
 STOCK_MODEL_PATH = "models/arima_model.pkl"
@@ -14,9 +17,12 @@ DATA_FOLDER = '../data'
 # default file names
 FILE_MARKETSTACK_RAW = '../data/marketstack_raw.csv'
 FILE_MARKETSTACK_CLEAN = '../data/marketstack_clean.csv'
+FILE_LOG = 'marketstack.log'
 
 # Stock to analyze
 SYMBOL = ['GT']
+
+logging.basicConfig(filename=FILE_LOG, filemode='w', level=logging.DEBUG)
 
 
 def create_folder(folder_name):
@@ -24,13 +30,17 @@ def create_folder(folder_name):
 
     if not os.path.exists(folder_name):
         os.makedirs(folder_name)
+        logger.info('Folder {} created'.format(folder_name))
         print('Folder {} created'.format(folder_name))
     else:
         print('Folder {} already exist'.format(folder_name))
+        logger.info('Folder {} already exist'.format(folder_name))
 
 
 def gather_data(symbol):
     """ get stocks data using marketstack API if data folder is empty"""
+
+    logger.info('Gathering data initiated')
 
     # Make main data directory if it doesn't already exist
     create_folder(DATA_FOLDER)
@@ -50,7 +60,7 @@ def gather_data(symbol):
         'access_key': access_key,
         'symbols': symbol,
         'date_from': '2014-01-01',
-        'date_to': '2024-02-29',
+        'date_to': '2024-03-31',
         'limit': 10000
     }
 
@@ -65,21 +75,31 @@ def gather_data(symbol):
             frames = [df, df_all]
             df_all = pd.concat(frames)
             print('#records for {} is {}; total records is {}'.format(symbol, df.shape[0], df_all.shape[0]))
+            logger.info('#records for {} is {}; total records is {}'.format(symbol, df.shape[0], df_all.shape[0]))
     else:
         # construct error message and append to error list
         error_message = "{} Request returned an error: {} {}".format(symbol, api_response['error']['code'],
                                                                      api_response['error']['message'])
         print(error_message)
         error_list.append(error_message)
+        logger.error(error_message)
 
     df_all.to_csv(FILE_MARKETSTACK_RAW, index=False)
+    logger.info('API data saved')
 
 
 def clean_data(from_path, to_path):
     """ Read raw stock data from csv, clean and save as cleaned csv file """
 
+    logger.info('Cleaning Initiated')
+
     if not os.path.exists(DATA_FOLDER):
+        logger.info('Gathering data initiated')
         gather_data(symbol=SYMBOL)
+    else:
+        logger.info('Gathering data skipped')
+
+    logger.info('Cleaning data in-progress')
 
     marketstack = pd.read_csv(from_path)
     marketstack_clean = marketstack.copy(deep=True)
@@ -123,6 +143,8 @@ def clean_data(from_path, to_path):
 
 def predict_volume(df_train, df_test, period):
 
+    logger.info('Predicting volume initiated')
+
     # load pretrained ARIMA model to predict volume
     model_volume = joblib.load(VOLUME_MODEL_PATH)
 
@@ -142,6 +164,7 @@ def predict_volume(df_train, df_test, period):
 
 def predict_stock(df_train, df_test, period):
 
+    logger.info('Predicting stock initiated')
     # load pretrained ARIMA model to predict stock values
     arima_results = joblib.load(STOCK_MODEL_PATH)
 
@@ -150,6 +173,9 @@ def predict_stock(df_train, df_test, period):
 
     start = len(df_train)
     end = len(df_train) + period
+
+    logger.info('predict period start {}'.format(start))
+    logger.info('predict period end {}'.format(end))
 
     forecast = arima_results.predict(
         start=start,
@@ -171,10 +197,14 @@ def return_figures():
     # first chart plots arable land from 1990 to 2015 in top 10 economies
     # as a line chart
 
+    logger.info('Return figures initiated')
+
     # get stock data
     df = clean_data(
         from_path=FILE_MARKETSTACK_RAW,
         to_path=FILE_MARKETSTACK_CLEAN)
+
+    logger.info(df.tail())
 
     # print stock evolution with std and mean
     graph_one = []
@@ -205,23 +235,19 @@ def return_figures():
             x=df.index,
             y=close_std,
             mode='lines',
-            name='Standard deviation',
-        )
-    )
-
-    graph_one.append(
-        go.Scatter(
-            x=df.index,
-            y=df.volume,
-            mode='lines',
-            name='share volume',
-            fillcolor='grey',
+            name='Std',
         )
     )
 
     layout_one = dict(title='Stock Price Evolution',
-                      xaxis=dict(title='Date'),
+                      xaxis=dict(title=''),
                       yaxis=dict(title='Stock value (in USD)'),
+                      legend=dict(
+                          yanchor='top',
+                          # y=0.99,
+                          xanchor='right',
+                          # x=0.01,
+                      )
                       # height=400,
                       # width=800,
                       )
@@ -241,7 +267,7 @@ def return_figures():
     )
 
     layout_two = dict(title='Trend',
-                      xaxis=dict(title='Date'),
+                      xaxis=dict(title=''),
                       yaxis=dict(title='$'),
                       # height=200,
                       # width=400,
@@ -266,13 +292,13 @@ def return_figures():
     )
 
     layout_three = dict(title='Seasonality',
-                        xaxis=dict(title='Date'),
-                        yaxis=dict(title='$'),
+                        xaxis=dict(title=''),
+                        yaxis=dict(title=''),
                         # height=150,
                         # width=300,
                         )
 
-    # display future predictions
+    # display future stock predictions
     graph_four = []
 
     df_train = df.loc[:'2023-06']
@@ -304,21 +330,92 @@ def return_figures():
                        yaxis=dict(title='Stock value (in USD)'),
                        )
 
+    # display volume evaluations
+    graph_five = [go.Scatter(
+        x=df.index,
+        y=df.volume,
+        mode='lines',
+        name=SYMBOL[0],
+    )]
+
+    layout_five = dict(title='Stock VOLUME Evolution',
+                       xaxis=dict(title=''),
+                       yaxis=dict(title='#shares in million'),
+                       legend=dict(
+                           yanchor='top',
+                           # y=0.99,
+                           xanchor='right',
+                           # x=0.01,
+                           )
+                       # height=400,
+                       # width=800,
+                       )
+
+    # display volume trend
+    graph_six = []
+
+    # calculate the trend
+    df['trend_volume'] = df['volume'].rolling(window=12, center=True).mean()
+
+    graph_six.append(
+        go.Scatter(
+            x=df['2016':].index,
+            y=df['trend_volume']["2016":],
+            mode='lines',
+        )
+    )
+
+    layout_six = dict(title='Trend',
+                      xaxis=dict(title=''),
+                      yaxis=dict(title='$'),
+                      font_family="Courier New",
+                      font_size=6,
+                      # height=200,
+                      # width=400,
+                      )
+
+    # display stocks seasonality
+    graph_seven = []
+
+    # detrend the series
+    df['detrended_volume'] = df['volume'] - df['trend_volume']
+
+    # calculate the seasonal component
+    df["month"] = df.index.month
+    df["seasonality_volume"] = df.groupby("month")["detrended_volume"].transform("mean")
+
+    graph_seven.append(
+        go.Scatter(
+            x=df['2021':].index,
+            y=df["seasonality_volume"]["2021":],
+            mode='lines',
+        )
+    )
+
+    layout_seven = dict(title='Seasonality',
+                        xaxis=dict(title=''),
+                        yaxis=dict(title=''),
+                        # height=150,
+                        # width=300,
+                        )
+
     # append all charts to the figures list
     figures = []
     figures.append(dict(data=graph_one, layout=layout_one))
     figures.append(dict(data=graph_two, layout=layout_two))
     figures.append(dict(data=graph_three, layout=layout_three))
     figures.append(dict(data=graph_four, layout=layout_four))
+    figures.append(dict(data=graph_five, layout=layout_five))
+    figures.append(dict(data=graph_six, layout=layout_six))
+    figures.append(dict(data=graph_seven, layout=layout_seven))
 
     return figures
 
 
 if __name__ == "__main__":
 
-    # gather_data(symbol=SYMBOL)
-
+    logger.info('Return figures initiated')
     clean_data(
         from_path=FILE_MARKETSTACK_RAW,
         to_path=FILE_MARKETSTACK_CLEAN
-)
+    )
