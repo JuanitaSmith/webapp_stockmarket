@@ -30,9 +30,11 @@ INFO:wrangling_scripts.wrangle_data:Predicting stock initiated
 INFO:wrangling_scripts.wrangle_data:Predicting volume initiated
 INFO:wrangling_scripts.wrangle_data:predict period start 111
 INFO:wrangling_scripts.wrangle_data:predict period end 135
-INFO:werkzeug:127.0.0.1 - - [08/Apr/2024 15:20:31] "GET / HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [08/Apr/2024 15:20:31] "[36mGET /static/img/githublogo.png HTTP/1.1[0m" 304 -
-INFO:werkzeug:127.0.0.1 - - [08/Apr/2024 15:20:31] "[36mGET /static/img/linkedinlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [08/Apr/2024 16:00:12] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Apr/2024 16:00:12] "[33mGET /favicons/site.webmanifest HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [08/Apr/2024 16:00:13] "[36mGET /static/img/linkedinlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [08/Apr/2024 16:00:13] "[36mGET /static/img/githublogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [08/Apr/2024 16:00:13] "[33mGET /favicons/safari-pinned-tab.svg HTTP/1.1[0m" 404 -
 INFO:wrangling_scripts.wrangle_data:Return figures initiated
 INFO:wrangling_scripts.wrangle_data:Cleaning Initiated
 INFO:wrangling_scripts.wrangle_data:Gathering data skipped
@@ -63,72 +65,7 @@ INFO:wrangling_scripts.wrangle_data:Predicting stock initiated
 INFO:wrangling_scripts.wrangle_data:Predicting volume initiated
 INFO:wrangling_scripts.wrangle_data:predict period start 111
 INFO:wrangling_scripts.wrangle_data:predict period end 135
-INFO:werkzeug:127.0.0.1 - - [08/Apr/2024 15:20:33] "GET / HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [08/Apr/2024 15:20:33] "[36mGET /static/img/githublogo.png HTTP/1.1[0m" 304 -
-INFO:werkzeug:127.0.0.1 - - [08/Apr/2024 15:20:33] "[36mGET /static/img/linkedinlogo.png HTTP/1.1[0m" 304 -
-INFO:wrangling_scripts.wrangle_data:Return figures initiated
-INFO:wrangling_scripts.wrangle_data:Cleaning Initiated
-INFO:wrangling_scripts.wrangle_data:Gathering data skipped
-INFO:wrangling_scripts.wrangle_data:Cleaning data in-progress
-INFO:wrangling_scripts.wrangle_data:           symbol      close    volume                            name
-date                                                                  
-2024-03-22     GT  12.754286  3.425063  Goodyear Tire & Rubber Company
-2024-03-25     GT  12.850000  3.195394  Goodyear Tire & Rubber Company
-2024-03-26     GT  12.947143  3.200230  Goodyear Tire & Rubber Company
-2024-03-27     GT  13.107143  2.749150  Goodyear Tire & Rubber Company
-2024-03-28     GT  13.278571  2.729311  Goodyear Tire & Rubber Company
-INFO:wrangling_scripts.wrangle_data:           symbol      close    volume                            name
-date                                                                  
-2023-11-01     GT  13.084286  5.358229  Goodyear Tire & Rubber Company
-2023-12-01     GT  14.293571  3.946029  Goodyear Tire & Rubber Company
-2024-01-01     GT  13.841429  4.605829  Goodyear Tire & Rubber Company
-2024-02-01     GT  12.976429  9.046845  Goodyear Tire & Rubber Company
-2024-03-01     GT  12.435000  3.733996  Goodyear Tire & Rubber Company
-INFO:wrangling_scripts.wrangle_data:Stock name: Goodyear Tire & Rubber Company
-INFO:wrangling_scripts.wrangle_data:           symbol      close    volume                            name
-date                                                                  
-2023-11-01     GT  13.084286  5.358229  Goodyear Tire & Rubber Company
-2023-12-01     GT  14.293571  3.946029  Goodyear Tire & Rubber Company
-2024-01-01     GT  13.841429  4.605829  Goodyear Tire & Rubber Company
-2024-02-01     GT  12.976429  9.046845  Goodyear Tire & Rubber Company
-2024-03-01     GT  12.435000  3.733996  Goodyear Tire & Rubber Company
-INFO:wrangling_scripts.wrangle_data:Predicting stock initiated
-INFO:wrangling_scripts.wrangle_data:Predicting volume initiated
-INFO:wrangling_scripts.wrangle_data:predict period start 111
-INFO:wrangling_scripts.wrangle_data:predict period end 135
-INFO:werkzeug:127.0.0.1 - - [08/Apr/2024 15:21:00] "GET / HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [08/Apr/2024 15:21:00] "[36mGET /static/img/githublogo.png HTTP/1.1[0m" 304 -
-INFO:werkzeug:127.0.0.1 - - [08/Apr/2024 15:21:00] "[36mGET /static/img/linkedinlogo.png HTTP/1.1[0m" 304 -
-INFO:wrangling_scripts.wrangle_data:Return figures initiated
-INFO:wrangling_scripts.wrangle_data:Cleaning Initiated
-INFO:wrangling_scripts.wrangle_data:Gathering data skipped
-INFO:wrangling_scripts.wrangle_data:Cleaning data in-progress
-INFO:wrangling_scripts.wrangle_data:           symbol      close    volume                            name
-date                                                                  
-2024-03-22     GT  12.754286  3.425063  Goodyear Tire & Rubber Company
-2024-03-25     GT  12.850000  3.195394  Goodyear Tire & Rubber Company
-2024-03-26     GT  12.947143  3.200230  Goodyear Tire & Rubber Company
-2024-03-27     GT  13.107143  2.749150  Goodyear Tire & Rubber Company
-2024-03-28     GT  13.278571  2.729311  Goodyear Tire & Rubber Company
-INFO:wrangling_scripts.wrangle_data:           symbol      close    volume                            name
-date                                                                  
-2023-11-01     GT  13.084286  5.358229  Goodyear Tire & Rubber Company
-2023-12-01     GT  14.293571  3.946029  Goodyear Tire & Rubber Company
-2024-01-01     GT  13.841429  4.605829  Goodyear Tire & Rubber Company
-2024-02-01     GT  12.976429  9.046845  Goodyear Tire & Rubber Company
-2024-03-01     GT  12.435000  3.733996  Goodyear Tire & Rubber Company
-INFO:wrangling_scripts.wrangle_data:Stock name: Goodyear Tire & Rubber Company
-INFO:wrangling_scripts.wrangle_data:           symbol      close    volume                            name
-date                                                                  
-2023-11-01     GT  13.084286  5.358229  Goodyear Tire & Rubber Company
-2023-12-01     GT  14.293571  3.946029  Goodyear Tire & Rubber Company
-2024-01-01     GT  13.841429  4.605829  Goodyear Tire & Rubber Company
-2024-02-01     GT  12.976429  9.046845  Goodyear Tire & Rubber Company
-2024-03-01     GT  12.435000  3.733996  Goodyear Tire & Rubber Company
-INFO:wrangling_scripts.wrangle_data:Predicting stock initiated
-INFO:wrangling_scripts.wrangle_data:Predicting volume initiated
-INFO:wrangling_scripts.wrangle_data:predict period start 111
-INFO:wrangling_scripts.wrangle_data:predict period end 135
-INFO:werkzeug:127.0.0.1 - - [08/Apr/2024 15:21:08] "GET / HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [08/Apr/2024 15:21:08] "[36mGET /static/img/linkedinlogo.png HTTP/1.1[0m" 304 -
-INFO:werkzeug:127.0.0.1 - - [08/Apr/2024 15:21:08] "[36mGET /static/img/githublogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [08/Apr/2024 16:00:19] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [08/Apr/2024 16:00:19] "[33mGET /favicons/site.webmanifest HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [08/Apr/2024 16:00:19] "[36mGET /static/img/linkedinlogo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [08/Apr/2024 16:00:19] "[36mGET /static/img/githublogo.png HTTP/1.1[0m" 304 -
