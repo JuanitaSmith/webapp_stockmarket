@@ -84,8 +84,27 @@ def gather_data(symbol):
         error_list.append(error_message)
         logger.info(error_message)
 
+    # get stock description
+    name = get_stock_name(SYMBOL[0])
+    logger.info('Stock name for {} retrieved: {}'.format(SYMBOL[0], name))
+    df_all['name'] = name
+
     df_all.to_csv(FILE_MARKETSTACK_RAW, index=False)
     logger.info('API data saved')
+
+
+def get_stock_name(symbol):
+
+    # get API access key
+    access_key = os.environ.get('MARKET_STACK_API')
+    params = {
+        'access_key': access_key,
+    }
+
+    url = 'https://api.marketstack.com/v1/tickers/' + symbol
+    api_result = requests.get(url, params)
+    api_response = api_result.json()
+    return api_response['name']
 
 
 def clean_data(from_path, to_path):
@@ -112,7 +131,7 @@ def clean_data(from_path, to_path):
         errors='raise').dt.date.astype('datetime64[ns]')
 
     # select only columns needed
-    cols = ['date', 'symbol', 'close', 'volume']
+    cols = ['date', 'symbol', 'close', 'volume', 'name']
     marketstack_clean = marketstack_clean[cols]
 
     # set date as index for time series analysis
@@ -133,7 +152,8 @@ def clean_data(from_path, to_path):
     marketstack_clean = (marketstack_clean.resample(freq).agg(
         {'symbol': 'first',
          'close': 'median',
-         'volume': 'max'
+         'volume': 'max',
+         'name': 'first',
          }))
 
     marketstack_clean = marketstack_clean.dropna()
@@ -208,6 +228,9 @@ def return_figures():
         from_path=FILE_MARKETSTACK_RAW,
         to_path=FILE_MARKETSTACK_CLEAN)
 
+    name = df['name'].iloc[0]
+    logger.info('Stock name: {}'.format(name))
+
     logger.info(df.tail())
 
     # print stock evolution with std and mean
@@ -246,14 +269,12 @@ def return_figures():
     layout_one = dict(title='Stock Price Evolution',
                       xaxis=dict(title=''),
                       yaxis=dict(title='Stock value (in USD)'),
+                      font=dict(size=10),
+                      font_family="Courier New",
                       legend=dict(
                           yanchor='top',
-                          # y=0.99,
                           xanchor='right',
-                          # x=0.01,
                       )
-                      # height=400,
-                      # width=800,
                       )
 
     # display stocks trend
@@ -273,8 +294,8 @@ def return_figures():
     layout_two = dict(title='Trend',
                       xaxis=dict(title=''),
                       yaxis=dict(title='$'),
-                      # height=200,
-                      # width=400,
+                      font=dict(size=10),
+                      font_family="Courier New",
                       )
 
     # display stocks seasonality
@@ -298,8 +319,8 @@ def return_figures():
     layout_three = dict(title='Seasonality',
                         xaxis=dict(title=''),
                         yaxis=dict(title=''),
-                        # height=150,
-                        # width=300,
+                        font=dict(size=10),
+                        font_family="Courier New",
                         )
 
     # display future stock predictions
@@ -316,7 +337,7 @@ def return_figures():
             x=df_test.index,
             y=df_test.close,
             mode='lines',
-            name='actual'
+            name='actual',
         )
     )
 
@@ -329,9 +350,15 @@ def return_figures():
         )
     )
 
-    layout_four = dict(title='Stock value prediction',
-                       xaxis=dict(title='Date'),
+    layout_four = dict(title='Stock price prediction',
+                       xaxis=dict(title=''),
                        yaxis=dict(title='Stock value (in USD)'),
+                       font=dict(size=10),
+                       font_family="Courier New",
+                       legend=dict(
+                           yanchor='top',
+                           xanchor='right',
+                       )
                        )
 
     # display volume evaluations
@@ -345,14 +372,12 @@ def return_figures():
     layout_five = dict(title='Stock VOLUME Evolution',
                        xaxis=dict(title=''),
                        yaxis=dict(title='#shares in million'),
+                       font=dict(size=10),
+                       font_family="Courier New",
                        legend=dict(
                            yanchor='top',
-                           # y=0.99,
                            xanchor='right',
-                           # x=0.01,
                            )
-                       # height=400,
-                       # width=800,
                        )
 
     # display volume trend
@@ -373,9 +398,7 @@ def return_figures():
                       xaxis=dict(title=''),
                       yaxis=dict(title='$'),
                       font_family="Courier New",
-                      font_size=6,
-                      # height=200,
-                      # width=400,
+                      font=dict(size=10),
                       )
 
     # display stocks seasonality
@@ -399,8 +422,7 @@ def return_figures():
     layout_seven = dict(title='Seasonality',
                         xaxis=dict(title=''),
                         yaxis=dict(title=''),
-                        # height=150,
-                        # width=300,
+                        font=dict(size=10),
                         )
 
     # append all charts to the figures list
@@ -413,7 +435,7 @@ def return_figures():
     figures.append(dict(data=graph_six, layout=layout_six))
     figures.append(dict(data=graph_seven, layout=layout_seven))
 
-    return figures
+    return figures, name
 
 
 if __name__ == "__main__":
