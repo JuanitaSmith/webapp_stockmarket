@@ -1,4 +1,17 @@
-# Stock Market Analysis Dashboard - PythonAnywhere Deployment
+## Udacity Data Science Nanodegree
+
+---
+## Project 2: Web development for data scientists
+The purpose of this project is to demonstrate basic web development skills for data scientists.
+Build a data dashboard to visualize model results.
+
+#### Created by: Juanita Smith
+#### Last date: March 2024
+
+---
+
+# Stock Market Analysis Dashboard
+<img src="favicons/stock_prediction.png" alt="drawing" width="500"/>
 
 ## Table of Contents
 
@@ -23,7 +36,7 @@ The objective of this project was to learn how to:
 - Use Bootstrap to make front end development easier
 - Use Plotly to create charts for great visualizations
 - Program in Flask to provide the backend to the website
-- Package files for deployment
+- Package files for deployment in PythonAnywhere
 
 The project extract Goodyear 'GT' stock market data using API from [marketstack](https://marketstack.com), for which a subscription is needed.
 end point: 'https://api.marketstack.com/v1/eod'
@@ -45,9 +58,9 @@ A log file `marketstack.log` will be created on execution
 
 ## 4. Website<a name="webapp"></a>
 
-Webapp stock analysis results can be seen [here](http://juasmithy.pythonanywhere.com)
-user name: js
-password: dev
+Webapp stock analysis results can be seen [here in PythonAnywhere](http://juasmithy.pythonanywhere.com)
+- user name: js
+- password: dev
 
 ## 5. Acknowledgements<a name="licensing"></a>
 
@@ -59,3 +72,4 @@ password: dev
 
 - [How to setup virtual environment for your project](https://help.pythonanywhere.com/pages/Virtualenvs/)
 - [How to setup webapp in PythonAnywhere](https://pub.towardsai.net/its-time-to-say-goodbye-to-heroku-and-welcome-pythonanywhere-ec3a2b8caa3b)
+- [Generating favicons]('https://realfavicongenerator.net')
